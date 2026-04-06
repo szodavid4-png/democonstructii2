@@ -1,229 +1,56 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apex Roof Craft</title>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
-}
-
-/* HEADER */
-header{
-  position:fixed;
-  width:100%;
-  top:0;
-  display:flex;
-  justify-content:space-between;
-  padding:20px 40px;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(10px);
-}
-
-header a{
-  color:white;
-  text-decoration:none;
-  margin-left:20px;
-}
-
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  background:linear-gradient(135deg,#1e293b,#020617);
-}
-
-.hero h1{
-  font-size:50px;
-}
-
-.hero p{
-  margin:10px 0;
-  color:#94a3b8;
-}
-
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 24px;
-  background:#3b82f6;
-  border-radius:8px;
-  text-decoration:none;
-  color:white;
-  transition:.3s;
-}
-
-.btn:hover{
-  transform:scale(1.05);
-}
-
-/* SECTION */
-.section{
-  padding:100px 20px;
-  text-align:center;
-}
-
-.dark{
-  background:#020617;
-}
-
-/* CARDS */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-  margin-top:40px;
-}
-
-.card{
-  background:#1e293b;
-  padding:30px;
-  border-radius:12px;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-10px);
-}
-
-/* FORM */
-form{
-  max-width:500px;
-  margin:auto;
-  display:flex;
-  flex-direction:column;
-}
-
-input,textarea{
-  margin:10px 0;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-}
-
-button{
-  padding:12px;
-  background:#3b82f6;
-  border:none;
-  color:white;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:20px;
-  background:#020617;
-  color:#64748b;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Apex Roof</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-  <div>Apex Roof Craft</div>
+<header class="navbar">
+  <div class="logo">APEX</div>
   <nav>
     <a href="#">Home</a>
-    <a href="#services">Servicii</a>
-    <a href="#contact">Contact</a>
+    <a href="#">Services</a>
+    <a href="#">Projects</a>
+    <a href="#">Contact</a>
   </nav>
+  <button class="cta">GET QUOTE</button>
 </header>
 
-<section class="hero">
-  <div>
-    <h1>Professional Roofing Solutions</h1>
-    <p>Modern, durable and reliable roof systems</p>
-    <a href="#contact" class="btn">Contact</a>
+<section class="contact-hero">
+  <div class="overlay"></div>
+
+  <div class="contact-container">
+    
+    <div class="left">
+      <h1>Contact Us</h1>
+      <p>
+        Get in touch with our team for a free quote or consultation.
+        We respond fast and deliver premium roofing solutions.
+      </p>
+
+      <div class="info">
+        <p>📞 +40 732 591 355</p>
+        <p>📧 contact@apexroof.com</p>
+        <p>📍 Romania</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <form id="contactForm">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <textarea placeholder="Your Message"></textarea>
+        <button type="submit">SEND MESSAGE →</button>
+      </form>
+    </div>
+
   </div>
 </section>
 
-<section id="services" class="section">
-  <h2>Servicii</h2>
-
-  <div class="cards">
-    <div class="card">
-      <h3>Metal Roofing</h3>
-      <p>High quality roofing systems</p>
-    </div>
-
-    <div class="card">
-      <h3>Installation</h3>
-      <p>Fast installation</p>
-    </div>
-
-    <div class="card">
-      <h3>Maintenance</h3>
-      <p>Repair & support</p>
-    </div>
-  </div>
-</section>
-
-<section class="section dark">
-  <h2>Why choose us</h2>
-  <p>Durability and professionalism</p>
-</section>
-
-<section id="contact" class="section">
-  <h2>Contact</h2>
-
-  <form onsubmit="sendMsg(event)">
-    <input type="text" placeholder="Nume" required>
-    <input type="email" placeholder="Email" required>
-    <textarea placeholder="Mesaj"></textarea>
-    <button type="submit">Trimite</button>
-  </form>
-</section>
-
-<footer>
-  © 2026 Apex Roof Craft
-</footer>
-
-<script>
-// smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-  link.onclick=e=>{
-    e.preventDefault();
-    document.querySelector(link.getAttribute("href"))
-      .scrollIntoView({behavior:"smooth"});
-  }
-});
-
-// form
-function sendMsg(e){
-  e.preventDefault();
-  alert("Mesaj trimis!");
-}
-
-// animation
-const els=document.querySelectorAll(".card");
-
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.style.opacity=1;
-      entry.target.style.transform="translateY(0)";
-    }
-  });
-});
-
-els.forEach(el=>{
-  el.style.opacity=0;
-  el.style.transform="translateY(40px)";
-  el.style.transition="0.5s";
-  obs.observe(el);
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
