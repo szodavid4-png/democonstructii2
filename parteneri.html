@@ -1,7 +1,84 @@
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partenerii Noștri</title>
 
-  alert("Mesaj trimis cu succes!");
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f1014;
+      color: white;
+    }
 
-  this.reset();
-});
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #17191e;
+      border: 1px solid #252830;
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 50px;
+      object-fit: contain;
+    }
+
+    a {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: orange;
+    }
+
+    @media(max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Partenerii Noștri</h1>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://www.bilka.ro/wp-content/themes/bilka/img/logo-bilka.png">
+    </div>
+    <div class="card">
+      <img src="https://www.lindab.com/globalassets/global/lindab-logo.png">
+    </div>
+    <div class="card">
+      <img src="https://www.wetterbest.ro/wp-content/uploads/2019/04/logo-wetterbest.png">
+    </div>
+    <div class="card">
+      <img src="https://www.velux.ro/~/media/Marketing%20pages/Velux_Flat_Roof_Module_Solution/VELUX_LOGO_CMYK.png">
+    </div>
+  </div>
+
+  <a href="index.html">← Înapoi la site</a>
+</div>
+
+</body>
+</html>
