@@ -1,56 +1,702 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - Apex Roof</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Acoperis — Arhitectura Protecției</title>
+  <meta name="description" content="Transformăm acoperișul într-o capodoperă de inginerie și estetică. Precizie milimetrică pentru protecție absolută. București & Ilfov." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1014;
+      --card: #17191e;
+      --border: #252830;
+      --primary: #F04A10;
+      --foreground: #d0d8e8;
+      --muted: #5a6070;
+      --white: #ffffff;
+      --font-heading: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--foreground); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(240,74,16,0.5); border-radius: 3px; }
+
+    /* UTILITIES */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 6rem 2rem; }
+    .section-alt { background: var(--card); }
+    .label-tag { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .label-tag::before, .label-tag::after { content:''; display:block; width:48px; height:1px; background: var(--primary); }
+    .label-tag.left::after { display:none; }
+    .label-tag span { color: var(--primary); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 3.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1.5rem; }
+    .accent { color: var(--primary); }
+    .outline-text { color: transparent; -webkit-text-stroke: 1.5px var(--foreground); }
+    .btn-primary { display: inline-block; background: var(--primary); color: #fff; padding: 1rem 2.5rem; font-family: var(--font-heading); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; transition: opacity 0.3s; cursor: pointer; border: none; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid rgba(208,216,232,0.2); color: rgba(208,216,232,0.8); padding: 1rem 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* NAVBAR */
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: all 0.5s; background: linear-gradient(to bottom, rgba(15,16,20,0.8), transparent); }
+    #navbar.scrolled { background: rgba(15,16,20,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: rgba(208,216,232,0.7); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta { display: flex; align-items: center; gap: 1rem; }
+    .nav-phone { display: flex; align-items: center; gap: 0.5rem; color: rgba(208,216,232,0.7); font-size: 0.85rem; transition: color 0.3s; }
+    .nav-phone:hover { color: var(--primary); }
+    .nav-offer { border: 1px solid var(--primary); color: var(--primary); padding: 0.6rem 1.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+    .nav-offer:hover { background: var(--primary); color: #fff; }
+    .nav-toggle { display: none; background: none; border: none; color: var(--foreground); cursor: pointer; padding: 0.5rem; }
+    .nav-toggle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+    .mobile-menu { display: none; background: rgba(15,16,20,0.98); backdrop-filter: blur(16px); border-top: 1px solid var(--border); padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: rgba(208,216,232,0.8); font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0; border-bottom: 1px solid rgba(37,40,48,0.5); transition: color 0.3s; }
+    .mobile-menu a:hover { color: var(--primary); }
+    .mobile-menu .mobile-offer { background: var(--primary); color: #fff; text-align: center; padding: 0.75rem; font-weight: 700; font-size: 0.85rem; border: none; margin-top: 0.5rem; }
+    .mobile-menu .mobile-phone { display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--primary); padding: 0.5rem 0; }
+    @media (max-width: 1024px) { .nav-links, .nav-cta { display: none; } .nav-toggle { display: block; } }
+
+    /* HERO */
+    #hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: grayscale(30%); transform-origin: center; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, rgba(15,16,20,0.9) 50%, rgba(15,16,20,0.4) 100%); }
+    .hero-overlay2 { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg), transparent 50%); }
+    .hero-content { position: relative; z-index: 10; max-width: 1280px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+    .hero-inner { max-width: 700px; }
+    .hero-tag { display: inline-block; color: var(--primary); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s forwards; }
+    .hero-title { font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 800; text-transform: uppercase; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) 0.4s forwards; }
+    .hero-desc { color: rgba(208,216,232,0.7); font-size: 1.05rem; max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) 0.6s forwards; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.23,1,0.32,1) 0.8s forwards; }
+    .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: rgba(208,216,232,0.4); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; animation: bounce 2s infinite; }
+    .hero-scroll svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+    .hero-line { position: absolute; top: 80px; right: 15%; width: 1px; height: 128px; background: linear-gradient(to bottom, rgba(240,74,16,0.5), transparent); display: none; }
+    @media (min-width: 1024px) { .hero-line { display: block; } }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+    /* SERVICES */
+    #servicii { padding: 6rem 2rem; }
+    .services-header { margin-bottom: 4rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+    .service-card { position: relative; background: var(--card); border: 1px solid var(--border); overflow: hidden; transition: border-color 0.3s; }
+    .service-card:hover { border-color: rgba(240,74,16,0.5); }
+    .service-card-img { position: relative; height: 224px; overflow: hidden; }
+    .service-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+    .service-card:hover .service-card-img img { transform: scale(1.05); }
+    .service-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--card) 0%, rgba(23,25,30,0.3) 50%, transparent 100%); }
+    .service-num { position: absolute; top: 1.25rem; left: 1.25rem; font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; color: rgba(240,74,16,0.3); }
+    .service-card-body { padding: 1.5rem 2rem 2rem; }
+    .service-card-title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; transition: color 0.3s; }
+    .service-card:hover .service-card-title { color: var(--primary); }
+    .service-card-desc { color: rgba(208,216,232,0.6); font-size: 0.875rem; line-height: 1.7; }
+    .service-card-line { position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.5s; }
+    .service-card:hover .service-card-line { transform: scaleX(1); }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* ABOUT */
+    #despre { padding: 6rem 2rem; background: var(--card); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap img { width: 100%; height: 500px; object-fit: cover; }
+    .about-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(23,25,30,0.5), transparent); }
+    .about-deco1 { position: absolute; bottom: -16px; right: -16px; width: 96px; height: 96px; border: 2px solid var(--primary); }
+    .about-deco2 { position: absolute; top: -16px; left: -16px; width: 64px; height: 64px; background: rgba(240,74,16,0.1); }
+    .about-text p { color: rgba(208,216,232,0.6); line-height: 1.8; margin-bottom: 1rem; }
+    .about-text p:last-of-type { margin-bottom: 2.5rem; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+    .stat-icon { width: 40px; height: 40px; background: rgba(240,74,16,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stat-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--primary); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .stat-value { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; }
+    .stat-label { color: rgba(208,216,232,0.5); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    @media (max-width: 1024px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } .about-deco1,.about-deco2 { display:none; } .about-img-wrap img { height: 350px; } }
+
+    /* PROCESS */
+    #proces { padding: 6rem 2rem; }
+    .process-header { text-align: center; margin-bottom: 5rem; }
+    .process-header .label-tag { justify-content: center; }
+    .process-timeline { position: relative; }
+    .process-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .process-steps { display: flex; flex-direction: column; gap: 3rem; }
+    .process-step { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+    .process-step-content { display: flex; align-items: flex-start; gap: 1.25rem; }
+    .process-step:nth-child(odd) .process-step-content { padding-right: 4rem; grid-column: 1; text-align: right; flex-direction: row-reverse; }
+    .process-step:nth-child(even) .process-step-content { padding-left: 4rem; grid-column: 2; }
+    .process-icon { flex-shrink: 0; width: 56px; height: 56px; background: rgba(240,74,16,0.1); border: 1px solid rgba(240,74,16,0.2); display: flex; align-items: center; justify-content: center; }
+    .process-icon svg { width: 24px; height: 24px; fill: none; stroke: var(--primary); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .process-num { color: rgba(240,74,16,0.4); font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; display: block; }
+    .process-step-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .process-step-desc { color: rgba(208,216,232,0.55); font-size: 0.875rem; line-height: 1.7; max-width: 320px; }
+    .process-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 12px; height: 12px; background: var(--primary); border-radius: 50%; }
+    @media (max-width: 1024px) {
+      .process-line { display: none; }
+      .process-step { grid-template-columns: 1fr; }
+      .process-step:nth-child(odd) .process-step-content { padding-right: 0; grid-column: 1; text-align: left; flex-direction: row; }
+      .process-step:nth-child(even) .process-step-content { padding-left: 0; grid-column: 1; }
+      .process-dot { display: none; }
+      .process-step-desc { max-width: 100%; }
+    }
+
+    /* PARTNERS */
+    #parteneri { padding: 4rem 2rem; border-top: 1px solid var(--border); }
+    .partners-header { text-align: center; margin-bottom: 3rem; }
+    .partners-header .label-tag { justify-content: center; }
+    .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .partner-card { display: flex; align-items: center; justify-content: center; background: var(--card); border: 1px solid var(--border); padding: 2rem; min-height: 100px; transition: border-color 0.3s; }
+    .partner-card:hover { border-color: rgba(240,74,16,0.4); }
+    .partner-card img { max-height: 48px; max-width: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: all 0.3s; }
+    .partner-card:hover img { filter: grayscale(0%); opacity: 1; }
+    .partner-fallback { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: rgba(208,216,232,0.6); transition: color 0.3s; display: none; }
+    .partner-card:hover .partner-fallback { color: var(--primary); }
+    @media (max-width: 768px) { .partners-grid { grid-template-columns: repeat(2,1fr); } }
+
+    /* TESTIMONIALS */
+    #recenzii { padding: 6rem 2rem; background: var(--card); }
+    .testimonials-header { margin-bottom: 4rem; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .testimonial-card { position: relative; background: var(--bg); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.5s; }
+    .testimonial-card:hover { border-color: rgba(240,74,16,0.3); }
+    .quote-icon { width: 32px; height: 32px; margin-bottom: 1.5rem; }
+    .quote-icon svg { width: 32px; height: 32px; fill: none; stroke: rgba(240,74,16,0.2); stroke-width: 2; }
+    .stars { display: flex; gap: 4px; margin-bottom: 1rem; }
+    .stars svg { width: 16px; height: 16px; fill: var(--primary); stroke: var(--primary); stroke-width: 1; }
+    .testimonial-title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .testimonial-text { color: rgba(208,216,232,0.55); font-size: 0.875rem; line-height: 1.8; margin-bottom: 1.5rem; }
+    .testimonial-author { padding-top: 1rem; border-top: 1px solid var(--border); }
+    .testimonial-name { font-weight: 600; font-size: 0.875rem; }
+    .testimonial-loc { color: rgba(208,216,232,0.4); font-size: 0.75rem; }
+    .testimonial-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform 0.5s; }
+    .testimonial-card:hover .testimonial-line { transform: scaleX(1); }
+    @media (max-width: 1024px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* CONTACT */
+    #contact { padding: 6rem 2rem; background: #fff; color: #0f1014; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .contact-info-label { color: var(--primary); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
+    .contact-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; margin: 1rem 0 1.5rem; color: #0f1014; }
+    .contact-desc { color: rgba(15,16,20,0.6); line-height: 1.8; margin-bottom: 2.5rem; max-width: 420px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .contact-item-icon { width: 40px; height: 40px; background: rgba(240,74,16,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-item-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--primary); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-item-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(15,16,20,0.7); margin-bottom: 0.25rem; }
+    .contact-item-val { color: #0f1014; font-size: 0.95rem; transition: color 0.3s; }
+    .contact-item-val:hover { color: var(--primary); }
+    .form-label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(15,16,20,0.7); margin-bottom: 0.5rem; }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 0.875rem 1rem; border: 1px solid rgba(15,16,20,0.15); color: #0f1014; background: transparent; font-family: var(--font-body); font-size: 0.95rem; outline: none; transition: border-color 0.3s; margin-bottom: 1.25rem; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--primary); }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(15,16,20,0.3); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-textarea { resize: none; height: 120px; }
+    .form-submit { width: 100%; background: #0f1014; color: #fff; border: none; padding: 1rem; font-family: var(--font-heading); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; transition: background 0.3s; margin-top: 0.5rem; }
+    .form-submit:hover { background: var(--primary); }
+    .form-success { display: none; text-align: center; padding: 4rem 2rem; }
+    .form-success.show { display: block; }
+    .form-success-icon { width: 64px; height: 64px; background: rgba(240,74,16,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+    .form-success-icon svg { width: 28px; height: 28px; fill: none; stroke: var(--primary); stroke-width: 2; }
+    .form-success h3 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; color: #0f1014; }
+    .form-success p { color: rgba(15,16,20,0.6); max-width: 360px; margin: 0 auto; }
+    @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; } .form-row { grid-template-columns: 1fr; gap: 0; } }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 4rem 2rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; max-width: 1280px; margin: 0 auto; }
+    .footer-logo img { height: 56px; margin-bottom: 1rem; }
+    .footer-brand-desc { color: rgba(208,216,232,0.5); font-size: 0.875rem; line-height: 1.7; max-width: 280px; }
+    .footer-heading { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; color: var(--primary); margin-bottom: 1.25rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { color: rgba(208,216,232,0.5); font-size: 0.875rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-contact-item { display: flex; align-items: center; gap: 0.75rem; color: rgba(208,216,232,0.5); font-size: 0.875rem; margin-bottom: 1rem; transition: color 0.3s; }
+    .footer-contact-item:hover { color: var(--primary); }
+    .footer-contact-item svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+    .footer-bottom { max-width: 1280px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { color: rgba(208,216,232,0.3); font-size: 0.75rem; }
+    .footer-wa { color: rgba(208,216,232,0.5); font-size: 0.875rem; transition: color 0.3s; }
+    .footer-wa:hover { color: var(--primary); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--primary); color: #fff; padding: 1rem 1.5rem; font-weight: 600; font-size: 0.9rem; z-index: 1000; transform: translateY(100px); opacity: 0; transition: all 0.4s; border-radius: 2px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="logo">APEX</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Projects</a>
-    <a href="#">Contact</a>
-  </nav>
-  <button class="cta">GET QUOTE</button>
-</header>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/ChatGPT-Image-Dec-8-2025-06_58_02-PM.png" alt="Max Acoperis Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="#hero">Acasă</a>
+      <a href="#servicii">Servicii</a>
+      <a href="#despre">Despre Noi</a>
+      <a href="#proces">Proces</a>
+      <a href="#recenzii">Recenzii</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:+40732591355" class="nav-phone">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        0732 591 355
+      </a>
+      <a href="#contact" class="nav-offer">Solicită Ofertă</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <svg id="menuIcon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" class="mobile-link">Acasă</a>
+    <a href="#servicii" class="mobile-link">Servicii</a>
+    <a href="#despre" class="mobile-link">Despre Noi</a>
+    <a href="#proces" class="mobile-link">Proces</a>
+    <a href="#recenzii" class="mobile-link">Recenzii</a>
+    <a href="#contact" class="mobile-offer mobile-link">Solicită Ofertă</a>
+    <a href="tel:+40732591355" class="mobile-phone">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      0732 591 355
+    </a>
+  </div>
+</nav>
 
-<section class="contact-hero">
-  <div class="overlay"></div>
-
-  <div class="contact-container">
-    
-    <div class="left">
-      <h1>Contact Us</h1>
-      <p>
-        Get in touch with our team for a free quote or consultation.
-        We respond fast and deliver premium roofing solutions.
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+    <img id="heroBg" src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/dulgherie-acoperis.jpg" alt="Premium roofing craftsmanship" />
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <span class="hero-tag">Standardul de Aur în Construcții</span>
+      <h1 class="hero-title">
+        MAX <span class="outline-text">ACOPERIS
+      </h1>
+      <p class="hero-desc">
+        Transformăm acoperișul într-o capodoperă de inginerie și estetică. Precizie milimetrică pentru protecție absolută.
       </p>
-
-      <div class="info">
-        <p>📞 +40 732 591 355</p>
-        <p>📧 contact@apexroof.com</p>
-        <p>📍 Romania</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Începe Proiectul</a>
+        <a href="#servicii" class="btn-outline">Descoperă Serviciile ↓</a>
       </div>
     </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+  <div class="hero-line"></div>
+</section>
 
-    <div class="right">
-      <form id="contactForm">
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="tel" placeholder="Phone Number" required>
-        <textarea placeholder="Your Message"></textarea>
-        <button type="submit">SEND MESSAGE →</button>
-      </form>
+<!-- SERVICES -->
+<section id="servicii">
+  <div class="container">
+    <div class="services-header">
+      <div class="label-tag left"><span>Ce Oferim</span></div>
+      <h2 class="section-title">Excelență <span class="accent">Structurală</span></h2>
     </div>
-
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/slider-4-1-1030x687-1.jpg" alt="Montaj Acoperișuri" loading="lazy" />
+          <div class="service-card-img-overlay"></div>
+          <span class="service-num">01</span>
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-card-title">Montaj Acoperișuri</h3>
+          <p class="service-card-desc">Instalăm acoperișuri durabile din țiglă, tablă și șindrilă, cu garanție și execuție profesionistă.</p>
+        </div>
+        <div class="service-card-line"></div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-08-at-17.47.11_02804a2e.jpg" alt="Reparații de Urgență" loading="lazy" />
+          <div class="service-card-img-overlay"></div>
+          <span class="service-num">02</span>
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-card-title">Reparații de Urgență</h3>
+          <p class="service-card-desc">Rezolvăm rapid problemele de infiltrații, înlocuim elemente deteriorate și prevenim daunele viitoare.</p>
+        </div>
+        <div class="service-card-line"></div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/shutterstock_739397203-1-800x535-1.jpg" alt="Sisteme Pluviale" loading="lazy" />
+          <div class="service-card-img-overlay"></div>
+          <span class="service-num">03</span>
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-card-title">Sisteme Pluviale</h3>
+          <p class="service-card-desc">Montăm și reparăm jgheaburi, burlane și sisteme de scurgere pentru protecția completă a casei.</p>
+        </div>
+        <div class="service-card-line"></div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img">
+          <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-08-at-17.50.55_def86566.jpg" alt="Dulgherie & Mansardări" loading="lazy" />
+          <div class="service-card-img-overlay"></div>
+          <span class="service-num">04</span>
+        </div>
+        <div class="service-card-body">
+          <h3 class="service-card-title">Dulgherie & Mansardări</h3>
+          <p class="service-card-desc">Realizăm structuri solide de dulgherie și amenajări de mansarde cu precizie matematică.</p>
+        </div>
+        <div class="service-card-line"></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<script src="script.js"></script>
+<!-- ABOUT -->
+<section id="despre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/WhatsApp-Image-2025-12-08-at-20.50.55_9174f65a.jpg" alt="Proiect finalizat Max Acoperis" loading="lazy" />
+        <div class="about-img-overlay"></div>
+        <div class="about-deco1"></div>
+        <div class="about-deco2"></div>
+      </div>
+      <div class="about-text">
+        <div class="label-tag left"><span>Despre Noi</span></div>
+        <h2 class="section-title">Acoperișul tău are nevoie de <span class="accent">experți</span></h2>
+        <p>Echipa Max Acoperis îți oferă soluții durabile și materiale de calitate superioară. Renovăm, înlocuim și reparăm orice tip de acoperiș – sigur, rapid și garantat.</p>
+        <p>Cu o experiență vastă în domeniu și sute de proiecte finalizate în București și Ilfov, suntem partenerul de încredere pentru protecția casei tale.</p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="stat-value">10+</div><div class="stat-label">Ani Experiență</div></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+            <div><div class="stat-value">500+</div><div class="stat-label">Proiecte Finalizate</div></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="stat-value">24/7</div><div class="stat-label">Suport Clienți</div></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div><div class="stat-value">100%</div><div class="stat-label">Clienți Mulțumiți</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="proces">
+  <div class="container">
+    <div class="process-header">
+      <div class="label-tag"><span>Cum Lucrăm</span></div>
+      <h2 class="section-title">Procesul <span class="accent">Nostru</span></h2>
+    </div>
+    <div class="process-timeline">
+      <div class="process-line"></div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-step-content">
+            <div class="process-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <span class="process-num">01</span>
+              <h3 class="process-step-title">Consultanță Gratuită</h3>
+              <p class="process-step-desc">Ne contactezi telefonic sau prin formular. Discutăm nevoile tale și stabilim o vizită la fața locului.</p>
+            </div>
+          </div>
+          <div class="process-dot"></div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-content">
+            <div class="process-icon">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div>
+              <span class="process-num">02</span>
+              <h3 class="process-step-title">Evaluare Tehnică</h3>
+              <p class="process-step-desc">Echipa noastră vine la locație, analizează structura și îți oferă o ofertă detaliată și transparentă.</p>
+            </div>
+          </div>
+          <div class="process-dot"></div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-content">
+            <div class="process-icon">
+              <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div>
+              <span class="process-num">03</span>
+              <h3 class="process-step-title">Execuție Profesionistă</h3>
+              <p class="process-step-desc">Începem lucrările cu echipamente profesionale și materiale de top. Respectăm termenele promise.</p>
+            </div>
+          </div>
+          <div class="process-dot"></div>
+        </div>
+        <div class="process-step">
+          <div class="process-step-content">
+            <div class="process-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <span class="process-num">04</span>
+              <h3 class="process-step-title">Predare & Garanție</h3>
+              <p class="process-step-desc">Predăm lucrarea impecabil finalizată, cu garanție pe materiale și manoperă. Suport post-lucrare.</p>
+            </div>
+          </div>
+          <div class="process-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="parteneri">
+  <div class="container">
+    <div class="partners-header">
+      <div class="label-tag"><span>Parteneri</span></div>
+      <h2 class="section-title">Partenerii <span class="accent">Noștri</span></h2>
+      <p style="color:var(--muted);font-size:0.875rem;margin-top:0.75rem;max-width:480px;margin-left:auto;margin-right:auto;">Lucrăm exclusiv cu branduri de top pentru a garanta calitatea materialelor folosite.</p>
+    </div>
+    <div class="partners-grid">
+      <a href="https://www.bilka.ro" target="_blank" rel="noopener" class="partner-card">
+        <img src="https://www.bilka.ro/wp-content/themes/bilka/img/logo-bilka.png" alt="Bilka" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+        <span class="partner-fallback">BILKA</span>
+      </a>
+      <a href="https://www.lindab.com" target="_blank" rel="noopener" class="partner-card">
+        <img src="https://www.lindab.com/globalassets/global/lindab-logo.png" alt="Lindab" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+        <span class="partner-fallback">LINDAB</span>
+      </a>
+      <a href="https://www.wetterbest.ro" target="_blank" rel="noopener" class="partner-card">
+        <img src="https://www.wetterbest.ro/wp-content/uploads/2019/04/logo-wetterbest.png" alt="Wetterbest" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+        <span class="partner-fallback">WETTERBEST</span>
+      </a>
+      <a href="https://www.velux.ro" target="_blank" rel="noopener" class="partner-card">
+        <img src="https://www.velux.ro/~/media/Marketing%20pages/Velux_Flat_Roof_Module_Solution/VELUX_LOGO_CMYK.png" alt="Velux" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+        <span class="partner-fallback">VELUX</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="recenzii">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="label-tag left"><span>Recenzii</span></div>
+      <h2 class="section-title">Ce Spun <span class="accent">Clienții</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></div>
+        <div class="stars">★★★★★</div>
+        <h4 class="testimonial-title">Fără cuvinte, recomand!</h4>
+        <p class="testimonial-text">Aveam probleme mari cu apa care se scurgea peste tot din cauza jgheaburilor deteriorate. Băieții de la Max Acoperis au venit rapid, au schimbat jgheaburile și burlanele și au făcut totul impecabil. Preț corect, lucru curat și garanție pe lucrare.</p>
+        <div class="testimonial-author"><div class="testimonial-name">Andrei Mugur</div><div class="testimonial-loc">Bacău, România</div></div>
+        <div class="testimonial-line"></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-icon"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></div>
+        <div class="stars">★★★★★</div>
+        <h4 class="testimonial-title">Super!</h4>
+        <p class="testimonial-text">Am avut surpriza plăcută să găsesc o echipă serioasă, care chiar își face treaba. Au reparat zonele afectate ale acoperișului, au refăcut izolația și acum în casă este mult mai cald. Comunicarea a fost excelentă de la început până la final.</p>
+        <div class="testimonial-author"><div class="testimonial-name">Alex Jpt</div><div class="testimonial-loc">Sălaj, România</div></div>
+        <div class="testimonial-line"></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-icon"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></div>
+        <div class="stars">★★★★★</div>
+        <h4 class="testimonial-title">Foarte mulțumit!</h4>
+        <p class="testimonial-text">Am apelat la Max Acoperis pentru refacerea completă a acoperișului vechi al casei. Echipa a fost punctuală, organizată și foarte transparentă. Au folosit materiale de calitate și au terminat chiar mai repede decât estimaseră.</p>
+        <div class="testimonial-author"><div class="testimonial-name">Katrin</div><div class="testimonial-loc">București, România</div></div>
+        <div class="testimonial-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-label">— Contact</div>
+        <h2 class="contact-title">Sunteți gata să <span style="color:var(--primary)">construim</span>?</h2>
+        <p class="contact-desc">Completați formularul pentru o evaluare tehnică gratuită a proiectului dumneavoastră. Vă contactăm în cel mai scurt timp.</p>
+        <div class="contact-item">
+          <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div class="contact-item-lbl">Telefon</div><a href="tel:+40732591355" class="contact-item-val">+40 732 591 355</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="contact-item-lbl">Email</div><a href="mailto:office@maxacoperis.ro" class="contact-item-val">office@maxacoperis.ro</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="contact-item-lbl">Zonă de Acoperire</div><span class="contact-item-val" style="cursor:default">București & Ilfov</span></div>
+        </div>
+      </div>
+      <div>
+        <div id="formSuccess" class="form-success">
+          <div class="form-success-icon"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+          <h3>Mulțumim!</h3>
+          <p>Solicitarea dumneavoastră a fost trimisă cu succes. Vă vom contacta în cel mai scurt timp.</p>
+        </div>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <label class="form-label">Nume Complet *</label>
+          <input type="text" name="full_name" class="form-input" placeholder="Ex: Andrei Ionescu" required />
+          <div class="form-row">
+            <div>
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-input" placeholder="andrei@email.com" />
+            </div>
+            <div>
+              <label class="form-label">Telefon *</label>
+              <input type="tel" name="phone" class="form-input" placeholder="07XX XXX XXX" required />
+            </div>
+          </div>
+          <label class="form-label">Tip Lucrare *</label>
+          <select name="work_type" class="form-select" required>
+            <option>Acoperiș Nou</option>
+            <option>Renovare / Reparații</option>
+            <option>Sisteme Pluviale</option>
+            <option>Dulgherie & Mansardări</option>
+            <option>Altele</option>
+          </select>
+          <label class="form-label" style="margin-top:1.25rem">Mesaj / Detalii Proiect</label>
+          <textarea name="message" class="form-textarea" placeholder="Descrieți viziunea dumneavoastră..."></textarea>
+          <button type="submit" class="form-submit">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Trimite Solicitarea
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-logo">
+      <img src="https://www.maxacoperis.ro/wp-content/uploads/2025/12/ChatGPT-Image-Dec-8-2025-06_58_02-PM.png" alt="Max Acoperis Logo" />
+      <p class="footer-brand-desc">Transformăm acoperișul într-o capodoperă de inginerie și estetică. Precizie milimetrică pentru protecție absolută.</p>
+    </div>
+    <div>
+      <h4 class="footer-heading">Navigare</h4>
+      <div class="footer-links">
+        <a href="#hero">Acasă</a>
+        <a href="#servicii">Servicii</a>
+        <a href="#despre">Despre Noi</a>
+        <a href="#proces">Proces</a>
+        <a href="#recenzii">Recenzii</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="footer-heading">Contact</h4>
+      <a href="tel:+40732591355" class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +40 732 591 355
+      </a>
+      <a href="mailto:office@maxacoperis.ro" class="footer-contact-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        office@maxacoperis.ro
+      </a>
+      <div class="footer-contact-item" style="cursor:default">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        București & Ilfov
+      </div>
+      <div class="footer-contact-item" style="cursor:default;font-size:0.75rem">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Program: Luni-Vineri 9:00 - 18:00
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; <span id="year"></span> Max Acoperis — Arhitectura Protecției. Toate drepturile rezervate.</p>
+    <a href="https://api.whatsapp.com/send?phone=40732591355" target="_blank" rel="noopener" class="footer-wa">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Solicitarea a fost trimisă cu succes!</div>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Hero parallax
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.25}px) scale(1.1)`;
+  });
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+    showToast('Solicitarea a fost trimisă cu succes!');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // Animate service cards on scroll
+  const cards = document.querySelectorAll('.service-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+cards.forEach((card, i) => {
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(40px)';
+  card.style.transition = `all 0.8s cubic-bezier(0.23,1,0.32,1) ${i * 0.15}s`;
+  observer.observe(card);
+  });
+</script>
 </body>
 </html>
